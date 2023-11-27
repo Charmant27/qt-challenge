@@ -57,7 +57,7 @@ const Login = () => {
 
                 />
                 <div className="flex flex-col gap-3">
-                    <input type="submit" value='sign up' className="bg-blue-400 w-[50%] text-white px-5 py-3 rounded-md" />
+                    <input type="submit" value='Login' className="bg-blue-400 w-[50%] text-white px-5 py-3 rounded-md" />
                     <p className="text-slate-400">Don't an account yet? <Link href='/' className="underline text-blue-400">sign up</Link></p>
                 </div>
             </form>
