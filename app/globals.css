@@ -2,4 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+label {
+    @apply font-bold
+}
 
+input, select {
+    @apply w-full border border-slate-200 rounded-md px-4 py-2
+}
+
+textarea {
+    @apply w-full border border-slate-200 rounded-md px-4 py-2 resize-none h-20
+}
+
+.input_fields {
+    @apply flex flex-col gap-2 py-4
+}
