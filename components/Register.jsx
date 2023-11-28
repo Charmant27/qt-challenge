@@ -7,11 +7,17 @@ const Register = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     const router = useRouter()
 
     const createUser = async (e) => {
         e.preventDefault()
+
+        if(!name|| !email || !password) {
+            router.push('/register')
+            setErrorMessage('Please fill all the information fields!!!')
+        }
 
         try {
             const res = await fetch('/api/register', {
@@ -22,9 +28,11 @@ const Register = () => {
                     password
                 })
             })
-            if (res.ok) {
+            if (!res.ok) {
+                router.prefetch()
+            } else {
                 router.refresh()
-                router.push('/')
+                router.push()
             }
         } catch (error) {
             console.log(error)
@@ -32,10 +40,16 @@ const Register = () => {
     }
 
     return (
-        <section className="bg-white shadow-2xl px-40 py-20 rounded-md">
+        <div className="grid place-items-center h-screen">
+            <section className="bg-white shadow-2xl px-40 py-20 rounded-md">
             <div className="pb-8">
                 <h1 className="text-blue-400 text-2xl font-bold">Task Manager</h1>
             </div>
+            {errorMessage && (
+                <div className="pb-5">
+                    <h3 className="text-red-500 font-semibold text-lg">{errorMessage}</h3>
+                </div>
+            )}
             <form className="flex flex-col gap-12" onSubmit={createUser}>
                 <input
                     type="text"
@@ -69,6 +83,7 @@ const Register = () => {
                 </div>
             </form>
         </section>
+        </div>
     )
 }
 
