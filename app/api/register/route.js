@@ -1,23 +1,18 @@
 import { NextResponse } from "next/server";
 import { connectDb } from "@/utils/database";
 import User from "@/models/users";
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 export const POST = async (req) => {
     try {
-        const body = await req.json()
-        const user = body.formData
+    const {name, email, password} = await req.json()
+    await connectDb()
+    const hashedPassword = await bcrypt.hash(password, 10)
+    await User.create({name: name, email: email, password: hashedPassword})
 
-        await connectDb()
-        const hashedPassword = await bcrypt.hash(user.password, 10)
-        user.password = hashedPassword
-        const newUser = await User.create(user)
-
-        
-        return new NextResponse(JSON.stringify(newUser), { status: 201 });
-
+    return new NextResponse({message: 'User was successfully created'}, {status: 201})
 
     } catch (error) {
-        return new NextResponse({ message: 'Failed to create user', error }, { status: 500 })
+        return new NextResponse({message: 'Failed to create the account'}, error, {status: 500})
     }
 }
