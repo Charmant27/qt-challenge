@@ -8,6 +8,7 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const router = useRouter()
 
@@ -20,6 +21,7 @@ const Register = () => {
         }
 
         try {
+            setIsLoading(true)
             const res = await fetch('/api/register', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -30,12 +32,15 @@ const Register = () => {
             })
             if (!res.ok) {
                 router.prefetch()
+                setIsLoading(false)
             } else {
                 router.refresh()
-                router.push()
+                router.push('/')
+                setIsLoading(false)
             }
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
     }
 
@@ -78,7 +83,7 @@ const Register = () => {
 
                 />
                 <div className="flex flex-col gap-3">
-                    <input type="submit" value='sign up' className="bg-blue-400 w-[50%] text-white px-5 py-3 rounded-md" />
+                    <input type="submit" value={isLoading ? 'Signing up' : 'Signup'} className="bg-blue-400 w-[50%] text-white px-5 py-3 rounded-md" />
                     <p className="text-slate-400">Have an account? <Link href='/' className="underline text-blue-400">Login</Link></p>
                 </div>
             </form>
