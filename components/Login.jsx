@@ -8,12 +8,14 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
+            setIsLoading(true)
             const res = await signIn("credentials", {
                 email,
                 password,
@@ -24,8 +26,10 @@ const Login = () => {
                 return
             }
             router.replace('/create-task')
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
+            setIsLoading(false)
         }
     }
   return (
@@ -58,7 +62,7 @@ const Login = () => {
 
                 />
                 <div className="flex flex-col gap-3">
-                    <input type="submit" value='Login' className="bg-blue-400 w-[50%] text-white px-5 py-3 rounded-md" />
+                    <input type="submit" value={isLoading ? 'Logging in' : 'Login'} className="bg-blue-400 w-[50%] text-white px-5 py-3 rounded-md" />
                     <p className="text-slate-400">Don't an account yet? <Link href='/register' className="underline text-blue-400">sign up</Link></p>
                 </div>
             </form>

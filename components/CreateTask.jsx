@@ -14,6 +14,7 @@ const CreateTask = () => {
     const [description, setDescriptions] = useState('')
     const [priority, setPriority] = useState('')
     const [files, setFiles] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const router = useRouter()
 
@@ -28,6 +29,7 @@ const CreateTask = () => {
         }
 
         try {
+            setIsLoading(true)
             const users = await fetch('/api/users')
             const data = await users.json()
             const res = await fetch('/api/tasks/new', {
@@ -39,9 +41,10 @@ const CreateTask = () => {
             })
             if (res.ok) {
                 router.push('/home')
+                setIsLoading(false)
             }
         } catch (error) {
-
+            setIsLoading(false)
         }
     }
 
@@ -158,7 +161,7 @@ const CreateTask = () => {
                             <button type="submit"
                                 className="bg-blue-400 text-white px-8 py-2 rounded-md font-bold"
                             >
-                                Submit
+                                {isLoading ? 'Submitting' : 'Submit'}
                             </button>
                         </div>
                     </div>
