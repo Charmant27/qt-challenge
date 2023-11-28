@@ -79,7 +79,7 @@ const Register = () => {
                 />
                 <div className="flex flex-col gap-3">
                     <input type="submit" value='sign up' className="bg-blue-400 w-[50%] text-white px-5 py-3 rounded-md" />
-                    <p className="text-slate-400">Have an account? <Link href='/login' className="underline text-blue-400">Login</Link></p>
+                    <p className="text-slate-400">Have an account? <Link href='/' className="underline text-blue-400">Login</Link></p>
                 </div>
             </form>
         </section>

@@ -1,9 +1,9 @@
-import React from 'react'
+import CreateTask from "@/components/CreateTask"
 
-const CreateTask = () => {
+const CreateTaskPage = () => {
   return (
-    <div>CreateTask</div>
+    <CreateTask />
   )
 }
 
-export default CreateTask
+export default CreateTaskPage
