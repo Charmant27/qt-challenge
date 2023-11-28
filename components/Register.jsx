@@ -4,7 +4,10 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 const Register = () => {
-    const [formData, setFormData] = useState({})
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
     const router = useRouter()
 
     const createUser = async (e) => {
@@ -13,10 +16,15 @@ const Register = () => {
         try {
             const res = await fetch('/api/register', {
                 method: 'POST',
-                body: JSON.stringify({ formData })
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password
+                })
             })
             if (res.ok) {
-                router.push('/home')
+                router.refresh()
+                router.push('/')
             }
         } catch (error) {
             console.log(error)
@@ -32,8 +40,7 @@ const Register = () => {
                 <input
                     type="text"
                     name="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Full name"
                     className="border border-slate-200 px-6 py-3 rounded-md"
 
@@ -42,8 +49,7 @@ const Register = () => {
                 <input
                     type="email"
                     name="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
                     className="w-full border border-slate-200 px-6 py-3 rounded-md"
 
@@ -52,8 +58,7 @@ const Register = () => {
                 <input
                     type="password"
                     name="password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="Your password"
                     className="w-full border border-slate-200 px-6 py-3 rounded-md"
 
