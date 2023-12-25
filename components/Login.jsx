@@ -23,9 +23,10 @@ const Login = () => {
             })
             if(res.error) {
                 setErrorMessage('Invalid credentials')
+                setIsLoading(false)
                 return
             }
-            router.replace('/create-task')
+            router.replace('/create-task') // this line means that the current page is replace by '/create-task page after user is authenticated
             setIsLoading(false)
         } catch (error) {
             console.log(error)
